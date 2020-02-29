@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ToDoList</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="main">
+    <div class="to-do">
+        <div class="to-do-header">
+            <div><h1>ToDo List</h1></div>
+        </div>
+        <div class="content-wrap">
+            <input id="new-name" type="text" placeholder="Новое дело">
+            <button onclick="addTask()">Добавить</button>
+            <button onclick="cleaning()">Очистить все</button>
+        </div>
+        <div id="incomplete-task" class="inp"></div>
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
