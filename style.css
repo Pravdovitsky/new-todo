@@ -82,6 +82,7 @@ button {
     align-items: center;
     user-select: none;
     margin: 0 9px;
+    cursor: pointer;
 }
 
 .not-completed {
@@ -95,6 +96,7 @@ button {
     align-items: center;
     user-select: none;
     margin: 0 9px;
+    cursor: pointer;
 }
 
 .date {
