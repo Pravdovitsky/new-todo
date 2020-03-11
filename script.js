@@ -1,9 +1,9 @@
-let taskList = [];
 const listContainer = document.getElementById('incomplete-task');
 const newName = document.getElementById('new-name');
+let taskList = [];
 
-const addItemToList = (name) => {
-    const newTask = {name: name, status: false};
+const addItemToList = (name, date) => {
+    const newTask = {name: name, date: date, status: false};
 
     taskList.push(newTask);
     localStorage.setItem('savedList', JSON.stringify(taskList));
@@ -15,12 +15,14 @@ const printList = () => {
 };
 
 const printTask = (task, index) => {
-    listContainer.innerHTML += '<div class="style-item">' +
-        '<div class="name-width">' + task.name + '</div>' +
-        (task.status ? '<div class="completed">Выполнено</div>' : '<button onclick="finishTask()" id="complete-' + index + '">Выполнено</button>') +
-        '<button onclick="deleteItem()" id=' + index + '>' + 'Удалить' + '</button>' + '</div>';
+    listContainer.innerHTML += `
+        <div class="style-item">
+            <div class="name-width">${task.name}</div>
+            <div class="date">${task.date}</div>
+            <div class = ${task.status ? 'completed' : 'not-completed'} onclick='finishTask()' id='complete-${index}'>Выполнено</div>
+            <button onclick="deleteItem()" id=${index}>Удалить</button>
+        </div>`
 };
-
 
 const saveToLS = () => {
     localStorage.setItem('savedList', JSON.stringify(taskList));
@@ -38,16 +40,25 @@ const finishTask = () => {
 };
 
 const addTask = () => {
+    const d = new Date();
+    let day = d.getDate() < 10 ? '0' + d.getDate() : d.getDate(),
+        month = d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1,
+        dateString;
+
+    dateString = day + '.' + month + '.' + d.getFullYear();
+
     if (newName.value) {
-        addItemToList(newName.value);
+        addItemToList(newName.value, dateString);
     } else {
-        alert('Заполните поля');
+        alert('Заполните поле задачи!');
     }
+
     newName.value = '';
 };
 
 const loadSavedData = () => {
-    let savedTaskList = JSON.parse(localStorage.getItem('savedList'));
+    const savedTaskList = JSON.parse(localStorage.getItem('savedList'));
+
     if (savedTaskList) {
         taskList = savedTaskList;
     } else {
@@ -62,7 +73,8 @@ const cleaning = () => {
 };
 
 const deleteItem = () => {
-    let id = +event.target.id;
+    const id = +event.target.id;
+
     taskList.splice(id, 1);
     listContainer.innerHTML = '';
     localStorage.setItem('savedList', JSON.stringify(taskList));
@@ -71,3 +83,9 @@ const deleteItem = () => {
 
 loadSavedData();
 printList();
+
+document.querySelector('input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        addTask();
+    }
+});

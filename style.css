@@ -18,8 +18,10 @@ button {
     border: 1px solid #000000;
     border-radius: 6px;
     font-size: 14px;
-    margin: 0 0 0 10px;
+    margin: 0 10px;
     outline: none;
+    cursor: pointer;
+    user-select: none;
 }
 
 .main {
@@ -74,9 +76,30 @@ button {
     border: 1px solid #000000;
     border-radius: 5px;
     font-size: 14px;
-    width: 100px;
-    height: 30px;
+    width: 90px;
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
+    margin: 0 9px;
+}
+
+.not-completed {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    margin: 0 9px;
+}
+
+.date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
 }
