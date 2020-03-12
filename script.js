@@ -33,7 +33,7 @@ const finishTask = () => {
     const buttonId = completeBtn.id;
     const taskId = +buttonId.replace('complete-', '');
 
-    taskList[taskId].status = true;
+    taskList[taskId].status = !taskList[taskId].status;
     saveToLS();
     listContainer.innerHTML = '';
     printList();
@@ -81,11 +81,22 @@ const deleteItem = () => {
     printList();
 };
 
-loadSavedData();
-printList();
+const deleteCompleted = () => {
+    taskList.forEach((item, i) => {
+        if (taskList[i].status) {
+            taskList.splice(i, 1);
+            listContainer.innerHTML = '';
+            localStorage.setItem('savedList', JSON.stringify(taskList));
+            printList();
+        }
+    })
+};
 
 document.querySelector('input').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         addTask();
     }
 });
+
+loadSavedData();
+printList();
