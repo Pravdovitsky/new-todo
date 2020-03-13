@@ -62,7 +62,7 @@ const loadSavedData = () => {
     if (savedTaskList) {
         taskList = savedTaskList;
     } else {
-        addItemToList('Example task');
+        addItemToList('Example task', '01.01.2020');
     }
 };
 
@@ -77,19 +77,18 @@ const deleteItem = () => {
 
     taskList.splice(id, 1);
     listContainer.innerHTML = '';
-    localStorage.setItem('savedList', JSON.stringify(taskList));
+    saveToLS();
     printList();
 };
 
-const deleteCompleted = () => {
-    taskList.forEach((item, i) => {
-        if (taskList[i].status) {
-            taskList.splice(i, 1);
-            listContainer.innerHTML = '';
-            localStorage.setItem('savedList', JSON.stringify(taskList));
-            printList();
-        }
-    })
+deleteCompleted = () => {
+    let uncompletedList= taskList.filter((task, i) => {
+        return !taskList[i].status;
+    });
+    taskList = JSON.parse(JSON.stringify(uncompletedList));
+    listContainer.innerHTML = '';
+    saveToLS();
+    printList();
 };
 
 document.querySelector('input').addEventListener('keydown', (e) => {
@@ -98,5 +97,5 @@ document.querySelector('input').addEventListener('keydown', (e) => {
     }
 });
 
-loadSavedData();
 printList();
+loadSavedData();
